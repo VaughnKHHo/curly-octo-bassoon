@@ -21,7 +21,7 @@ jobs:
           - os: ubuntu-latest
             platform: linux
             artifact-name: linux-build
-            executable-path: dist/executables/dFusion-DLP-miner.AppImage  # Adjust based on your build output
+            executable-path: dist/executables/dFusion DLP miner-0.1.0.AppImage  # Adjust based on your build output
 
     runs-on: ${{ matrix.os }}
 
@@ -42,7 +42,7 @@ jobs:
         run: npx nx package electron
 
       - name: Make Electron app ${{ matrix.platform }}
-        run: npx nx run electron:make
+        run: npx nx run electron:make --verbose
         shell: bash
 
       # - name: Ensure Linux executable permissions
