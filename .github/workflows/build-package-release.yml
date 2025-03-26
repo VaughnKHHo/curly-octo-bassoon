@@ -53,14 +53,11 @@ jobs:
       - name: debug files
         run: dir
 
-      - name: directories
-        run: dir dist
-
       - name: dist
         run: dir dist
 
-      - name: dist
-        run: dir executables
+      - name: dist/executables
+        run: dir dist/executables
 
 
       # - name: Create Release and Upload Assets
