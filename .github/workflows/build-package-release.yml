@@ -51,7 +51,7 @@ jobs:
           path: dist/executables/dFusion DLP miner Setup 0.1.0.exe
 
       - name: debug files / directories
-        run: pwd && ls-la && ls -la dist/executables/ || echo "Directory not found"
+        run: pwd && ls -la && ls -la dist/executables/ || echo "Directory not found"
 
   # create-release:
   #   needs: build
