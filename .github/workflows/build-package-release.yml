@@ -46,7 +46,8 @@ jobs:
           brew install python@3.10
           echo 'export PATH="/opt/homebrew/opt/python@3.10/bin:$PATH"' >> ~/.zshrc
           source ~/.zshrc
-          python3 --version # Verify the Python version
+          python3 -m venv venv
+          source venv/bin/activate
           python3 -m pip install --upgrade pip setuptools wheel
 
       - name: Install dependencies
