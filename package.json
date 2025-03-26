@@ -12,16 +12,7 @@
   },
   "build": {
     "appId": "com.electron.dfusionVpslMiner",
-    "productName": "dFusion DLP miner",
-    "win": {
-      "target": "nsis",
-      "icon": "build/icon.ico"
-    },
-    "nsis": {
-      "oneClick": true,
-      "perMachine": false,
-      "allowToChangeInstallationDirectory": false
-    }
+    "productName": "dFusion DLP miner"
   },
   "private": true,
   "dependencies": {

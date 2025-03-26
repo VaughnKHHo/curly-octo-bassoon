@@ -35,8 +35,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build renderer (vpsl-miner) and electron app and package electron app
-        run: npx nx package electron --${{ matrix.platform }}
+      - name: Build & package renderer (vpsl-miner) and electron app ${{ matrix.platform }}
+        run: npx nx package electron
+
+      - name: Make electron app ${{ matrix.platform }}
+        run: npx nx package electron
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
