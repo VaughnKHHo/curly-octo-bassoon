@@ -59,30 +59,29 @@ jobs:
       - name: dist/executables
         run: dir dist/executables
 
+      - name: Create Release and Upload Assets
+        uses: softprops/action-gh-release@v2
+        # if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          body: |
+            Changes in this Release:
+            - Latest miner build
+          draft: false
+          prerelease: false
+          files: ./dist/executables/dFusion DLP miner Setup 0.1.0.exe
 
-      # - name: Create Release and Upload Assets
-      #   uses: softprops/action-gh-release@v2
-      #   # if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     tag_name: ${{ github.ref_name }}
-      #     name: Release ${{ github.ref_name }}
-      #     body: |
-      #       Changes in this Release:
-      #       - Latest miner build
-      #     draft: false
-      #     prerelease: false
-      #     files: ./dist/executables/dFusion DLP miner Setup 0.1.0.exe
-
-      # - name: Log build result
-      #   if: always()
-      #   run: |
-      #     if [ ${{ job.status }} == "success" ]; then
-      #       echo "Build and release completed successfully"
-      #     else
-      #       echo "Build and release failed"
-      #     fi
+      - name: Log build result
+        if: always()
+        run: |
+          if [ ${{ job.status }} == "success" ]; then
+            echo "Build and release completed successfully"
+          else
+            echo "Build and release failed"
+          fi
 
   # create-release:
   #   needs: build
