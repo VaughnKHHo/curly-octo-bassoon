@@ -44,7 +44,8 @@ jobs:
         if: matrix.os == 'macos-latest'
         run: |
           brew install python
-          python3 -m ensurepip
+          python3 -m venv venv
+          source venv/bin/activate
           python3 -m pip install setuptools
 
       - name: Install dependencies
