@@ -43,11 +43,11 @@ jobs:
       - name: Install macOS dependencies
         if: matrix.os == 'macos-latest'
         run: |
-          brew install python
-          python3 -m venv venv
-          source venv/bin/activate
+          brew install python@3.10
+          echo 'export PATH="/opt/homebrew/opt/python@3.10/bin:$PATH"' >> ~/.zshrc
+          source ~/.zshrc
+          python3 --version # Verify the Python version
           python3 -m pip install --upgrade pip setuptools wheel
-          python3 -m pip install distutils
 
       - name: Install dependencies
         run: npm install
