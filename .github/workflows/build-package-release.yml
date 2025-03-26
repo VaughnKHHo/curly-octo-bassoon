@@ -76,12 +76,13 @@ jobs:
 
       - name: Log build result
         if: always()
+        shell: pwsh  # Explicitly use PowerShell
         run: |
-          if [ ${{ job.status }} == "success" ]; then
-            echo "Build and release completed successfully"
-          else
-            echo "Build and release failed"
-          fi
+          if (${{ job.status }} -eq "success") {
+            Write-Output "Build and release completed successfully"
+          } else {
+            Write-Output "Build and release failed"
+          }
 
   # create-release:
   #   needs: build
