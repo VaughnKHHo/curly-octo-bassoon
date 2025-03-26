@@ -40,6 +40,14 @@ jobs:
           node-version: 22
           cache: 'npm'
 
+      - name: Install macOS dependencies
+        if: matrix.os == 'macos-latest'
+        run: |
+          brew install python
+          python -m ensurepip --upgrade
+          pip install --upgrade pip setuptools
+          sudo npm install -g node-gyp
+
       - name: Install dependencies
         run: npm install
 
