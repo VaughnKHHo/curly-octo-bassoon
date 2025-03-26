@@ -46,12 +46,23 @@ jobs:
           brew install python@3.10
           echo 'export PATH="/opt/homebrew/opt/python@3.10/bin:$PATH"' >> ~/.zshrc
           source ~/.zshrc
-          python3 -m venv venv
-          source venv/bin/activate
+          python3 -m ensurepip --upgrade
           python3 -m pip install --upgrade pip setuptools wheel
+          python3 -m pip install --user distlib
+
+      - name: Set Node.js and Python environment
+        run: |
+          echo "PYTHON=$(which python3)" >> $GITHUB_ENV
+          echo "npm_config_python=$(which python3)" >> $GITHUB_ENV
+          echo "npm_config_arch=arm64" >> $GITHUB_ENV
 
       - name: Install dependencies
         run: npm install
+
+      - name: Rebuild native modules
+        run: |
+          npx electron-rebuild
+          npm rebuild
 
       - name: Build & package renderer (vpsl-miner) and Electron app ${{ matrix.platform }}
         run: npx nx package electron --verbose
