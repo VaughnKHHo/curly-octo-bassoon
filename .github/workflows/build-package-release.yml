@@ -50,8 +50,17 @@ jobs:
           name: ${{ matrix.artifact-name }}
           path: dist/executables/dFusion DLP miner Setup 0.1.0.exe
 
-      - name: debug files / directories
+      - name: debug files
         run: dir
+
+      - name: directories
+        run: dir dist
+
+      - name: dist
+        run: dir dist
+
+      - name: dist
+        run: dir dist
 
 
       # - name: Create Release and Upload Assets
