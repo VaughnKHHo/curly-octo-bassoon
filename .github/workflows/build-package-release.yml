@@ -11,18 +11,18 @@ jobs:
   build:
     strategy:
       matrix:
-        # os: [ubuntu-latest, windows-latest, macos-latest]
-        os: [windows-latest]
+        os: [ubuntu-latest, windows-latest]
         include:
           - os: windows-latest
             platform: win
             artifact-name: windows-build
-          # - os: ubuntu-latest
-          #   platform: linux
-          #   artifact-name: linux-build
-          # - os: macos-latest
-          #   platform: mac
-          #   artifact-name: macos-build
+            executable-path: dist/executables/dFusion DLP miner Setup 0.1.0.exe
+
+          - os: ubuntu-latest
+            platform: linux
+            artifact-name: linux-build
+            executable-path: dist/executables/dFusion-DLP-miner.AppImage  # Adjust based on your build output
+
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -38,81 +38,52 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build & package renderer (vpsl-miner) and electron app ${{ matrix.platform }}
+      - name: Build & package renderer (vpsl-miner) and Electron app ${{ matrix.platform }}
         run: npx nx package electron
 
-      - name: Make electron app ${{ matrix.platform }}
+      - name: Make Electron app ${{ matrix.platform }}
         run: npx nx run electron:make
+        shell: bash
+
+      # - name: Ensure Linux executable permissions
+      #   if: matrix.platform == 'linux'
+      #   run: chmod +x ${{ matrix.executable-path }}
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.artifact-name }}
-          path: dist/executables/dFusion DLP miner Setup 0.1.0.exe
+          path: ${{ matrix.executable-path }}
 
-      - name: debug files
-        run: dir
+      - name: Debug directory structure
+        run: |
+          echo "Root Directory:"
+          ls -la
+          echo "Dist Directory:"
+          ls -la dist
+          echo "Executables Directory:"
+          ls -la dist/executables
+        shell: bash
 
-      - name: dist
-        run: dir dist
-
-      - name: dist/executables
-        run: dir dist/executables
+  create-release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts/
 
       - name: Create Release and Upload Assets
         uses: softprops/action-gh-release@v2
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{ github.run_number }}
-          name: Release v${{ github.run_number }}
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
           body: |
             Changes in this Release:
             - Latest miner build
           draft: false
           prerelease: false
-          files: ./dist/executables/dFusion DLP miner Setup 0.1.0.exe
-
-      - name: Log build result
-        if: always()
-        shell: pwsh  # Explicitly use PowerShell
-        run: |
-          if ("${{ job.status }}" -eq "success") {
-            echo "Build and release completed successfully"
-          } else {
-            echo "Build and release failed"
-          }
-
-  # create-release:
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Download all artifacts
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         path: artifacts/
-
-  #     - name: Create Release and Upload Assets
-  #       uses: softprops/action-gh-release@v2
-  #       # if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #       with:
-  #         tag_name: ${{ github.ref_name }}
-  #         name: Release ${{ github.ref_name }}
-  #         body: |
-  #           Changes in this Release:
-  #           - Latest miner build
-  #         draft: false
-  #         prerelease: false
-  #         files: ./dist/executables/dFusion DLP miner Setup 0.1.0.exe
-
-  #     - name: Log build result
-  #       if: always()
-  #       run: |
-  #         if [ ${{ job.status }} == "success" ]; then
-  #           echo "Build and release completed successfully"
-  #         else
-  #           echo "Build and release failed"
-  #         fi
+          files: artifacts/**/*
