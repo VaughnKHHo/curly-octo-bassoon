@@ -78,7 +78,7 @@ jobs:
         if: always()
         shell: pwsh  # Explicitly use PowerShell
         run: |
-          if (${{ job.status }} -eq "success") {
+          if ("${{ job.status }}" -eq "success") {
             echo "Build and release completed successfully"
           } else {
             echo "Build and release failed"
