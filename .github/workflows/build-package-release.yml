@@ -26,7 +26,7 @@ jobs:
           - os: macos-latest
             platform: mac
             artifact-name: macos-build
-            executable-path: dist/executables/dFusion-DLP-miner-0.1.0-arm64.dmg # TODO version
+            executable-path: dist/executables/dFusion-DLP-miner-0.1.0-arm64-mac.zip # TODO version
 
     runs-on: ${{ matrix.os }}
 
