@@ -16,17 +16,17 @@ jobs:
           - os: windows-latest
             platform: win
             artifact-name: windows-build
-            executable-path: dist/executables/dFusion DLP miner Setup 0.1.0.exe # TODO version
+            executable-path: dist/executables/dFusion-DLP-miner Setup 0.1.0.exe # TODO version
 
           - os: ubuntu-latest
             platform: linux
             artifact-name: linux-build
-            executable-path: dist/executables/dFusion DLP miner-0.1.0.AppImage # TODO version
+            executable-path: dist/executables/dFusion-DLP-miner-0.1.0.AppImage # TODO version
 
           - os: macos-latest
             platform: mac
             artifact-name: macos-build
-            executable-path: dist/executables/dFusion DLP miner-0.1.0-arm64.dmg # TODO version
+            executable-path: dist/executables/dFusion-DLP-miner-0.1.0-arm64.dmg # TODO version
 
     runs-on: ${{ matrix.os }}
 

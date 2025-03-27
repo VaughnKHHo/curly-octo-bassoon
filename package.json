@@ -12,7 +12,7 @@
   },
   "build": {
     "appId": "com.electron.dfusionVpslMiner",
-    "productName": "dFusion DLP miner",
+    "productName": "dFusion-DLP-miner",
     "linux": {
       "target": "AppImage",
       "executableName": "dfusion-dlp-miner",
