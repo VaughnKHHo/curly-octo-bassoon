@@ -17,9 +17,6 @@
       "target": "AppImage",
       "executableName": "dfusion-dlp-miner",
       "artifactName": "${productName}-${version}.${ext}"
-    },
-    "mac": {
-      "target": "dmg"
     }
   },
   "private": true,
