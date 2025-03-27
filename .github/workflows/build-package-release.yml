@@ -80,8 +80,10 @@ jobs:
           ls -la dist
           echo "Executables Directory:"
           ls -la dist/executables
-          echo "mac-arm64 Directory:"
-          ls -la dist/executables/mac-arm64
+          if [[ "${{ matrix.os }}" == "macos-latest" ]]; then
+            echo "mac-arm64 Directory:"
+            ls -la dist/executables/mac-arm64
+          fi
         shell: bash
 
   create-release:
