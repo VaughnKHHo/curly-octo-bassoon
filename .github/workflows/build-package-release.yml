@@ -11,7 +11,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest, windows-latest] # macos-latest
         include:
           - os: windows-latest
             platform: win
@@ -23,10 +23,10 @@ jobs:
             artifact-name: linux-build
             executable-path: dist/executables/dFusion-DLP-miner-0.1.0.AppImage # TODO version
 
-          - os: macos-latest
-            platform: mac
-            artifact-name: macos-build
-            executable-path: dist/executables/dFusion-DLP-miner-0.1.0-arm64.dmg # TODO version
+          # - os: macos-latest
+          #   platform: mac
+          #   artifact-name: macos-build
+          #   executable-path: dist/executables/dFusion-DLP-miner-0.1.0-arm64.dmg # TODO version
 
     runs-on: ${{ matrix.os }}
 
